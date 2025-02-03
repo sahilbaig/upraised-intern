@@ -1,5 +1,5 @@
-import pkg from 'pg';  // Import the entire 'pg' package as the default
-const { Pool } = pkg;  // Destructure the 'Pool' from the imported package
+import pkg from 'pg'; // need do this else import errors
+const { Pool } = pkg;
 
 import dotenv from 'dotenv';
 dotenv.config();
