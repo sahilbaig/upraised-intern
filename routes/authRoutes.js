@@ -3,8 +3,8 @@ import { registerUser, loginUser } from '../handlers/authHandler.js';
 
 const router = express.Router();
 
-router.get('/register', registerUser);
-router.get('/login', loginUser);
+router.post('/register', registerUser);
+router.post('/login', loginUser);
 
 
 export default router;

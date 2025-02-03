@@ -4,7 +4,7 @@ const router = Router();
 
 router.get('/gadgets', getGadgets);
 router.post('/gadgets', addGadget);
-router.patch('/gadgets/:id', updateGadget);
+router.patch('/gadgets', updateGadget);
 router.delete('/gadgets', deleteGadget);
 router.post('/gadgets/:id/self-destruct', selfDestructGadget);
 router.get('/gadgets', getGadgetsByStatus);
