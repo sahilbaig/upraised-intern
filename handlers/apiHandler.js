@@ -1,20 +1,20 @@
-const pool = require('../config/db');
+import { query } from '../config/db.js';
 
-module.exports.createUser = async (req, res) => {
+export async function createUser(req, res) {
     try {
         // Your logic for creating a user
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Database error" });
     }
-};
+}
 
-module.exports.getUser = async (req, res) => {
+export async function getUser(req, res) {
     try {
-        const result = await pool.query('SELECT * FROM test');
+        const result = await query('SELECT * FROM test');
         res.json(result.rows);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Database error" });
     }
-};
+}
