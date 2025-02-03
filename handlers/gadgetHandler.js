@@ -1,18 +1,35 @@
 import { query } from "../config/db.js";
 export async function getGadgets(req, res) {
+    const { status } = req.query;
+
+    let queryText;
+    let queryParams = [];
+
+    if (status) {
+        // Query with status filter
+        queryText = 'SELECT * FROM gadgets WHERE status = $1';
+        queryParams.push(status);
+    } else {
+        // Query without status filter
+        queryText = 'SELECT * FROM gadgets';
+    }
+
     try {
-        const result = await query('SELECT * FROM gadgets');
-        const gadgetsInsertedWithProb = result.rows.map(gadget => ({
+        const result = await query(queryText, queryParams);
+
+        // Add mission_success_probability to each gadget
+        const gadgetsWithProb = result.rows.map(gadget => ({
             ...gadget,
             mission_success_probability: Math.floor(Math.random() * 101) + '%',
         }));
 
-        res.json(gadgetsInsertedWithProb);
+        res.json(gadgetsWithProb);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Database error" });
     }
 }
+
 
 export async function addGadget(req, res) {
     const { name, status } = req.body;
@@ -94,14 +111,3 @@ function generateConfirmationCode() {
     return 123456;
 }
 
-export async function getGadgetsByStatus(req, res) {
-    const { status } = req.query;
-
-    try {
-        const result = await query('SELECT * FROM gadgets WHERE status = $1', [status]);
-        res.json(result.rows);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Database error" });
-    }
-}
